@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'Could not get posts...' });
   }
 });
 
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json(post);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'Could not find post...' });
   }
 });
 
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
 
     res.status(201).json(savedPost);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'Could not create post...' });
   }
 });
 
