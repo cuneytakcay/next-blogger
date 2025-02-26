@@ -30,12 +30,13 @@ router.get('/:id', async (req, res) => {
 // Create a new post
 // POST /api/posts
 router.post('/', async (req, res) => {
-  const { title, content, author } = req.body;
+  const { title, content, author, categories } = req.body;
 
   const newPost = new Post({
     title,
     content,
     author,
+    categories,
   });
 
   try {
