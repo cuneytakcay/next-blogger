@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import postsRoute from './routes/postsRoute.js';
+
 dotenv.config();
 
 const app = express();
@@ -20,6 +22,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(express.json());
+
+// Routes
+app.use('/api/posts', postsRoute);
 
 // MongoDB connection
 mongoose
