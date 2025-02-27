@@ -1,9 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import session from 'express-session';
 import dotenv from 'dotenv';
-
+import passport from './passportConfig.js';
 import postsRoute from './routes/postsRoute.js';
+import googleAuthRoute from './routes/googleAuthRoute.js';
 
 dotenv.config();
 
@@ -21,9 +23,19 @@ const corsOptions = {
 // Middlewares
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
 
 // Routes
+app.use('/auth/google', googleAuthRoute);
 app.use('/api/posts', postsRoute);
 
 // MongoDB connection
