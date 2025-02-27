@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
 import passport from './passportConfig.js';
 import postsRoute from './routes/postsRoute.js';
-import googleAuthRoute from './routes/googleAuthRoute.js';
 import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
 
@@ -40,8 +39,7 @@ app.use(passport.session());
 app.use(express.json());
 
 // Routes
-app.use('/auth/google', googleAuthRoute);
-app.use('/api/auth', authRoute);
+app.use('/auth', authRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/profile', userRoute);
 

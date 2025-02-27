@@ -6,7 +6,8 @@ const userSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String },
+    googleId: { type: String },
     avatar: { type: String },
   },
   {
@@ -53,21 +54,6 @@ userSchema.statics.register = async function ({
     password: hashedPassword,
     avatar,
   });
-
-  return user;
-};
-
-// Static method for logging in a user
-userSchema.statics.login = async function ({ email, password }) {
-  const user = await this.findOne({ email });
-
-  if (!user) throw new Error('Invalid user credentials');
-
-  const bytes = CryptoJS.AES.decrypt(user.password, process.env.CRYPTO_SECRET);
-  const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-
-  if (originalPassword !== password)
-    throw new Error('Invalid user credentials');
 
   return user;
 };

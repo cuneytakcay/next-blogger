@@ -1,47 +1,50 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
+import passport from '../passportConfig.js';
 import User from '../models/User.js';
 
 const router = express.Router();
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '3d',
-  });
-};
+// Google OAuth Login
+// GET /auth/google
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
 
-// Login to get a JWT token
-// POST /api/auth/login
-router.post('/login', async (req, res) => {
-  try {
-    const user = await User.login(req.body);
-    const token = createToken(user._id);
-
-    // Destructure the user object to hide the password
-    const { password, ...userData } = user.toObject();
-
-    res.status(200).json({ token, user: userData });
-  } catch (err) {
-    res.status(401).json({ message: 'Invalid credentials...' });
+// Google OAuth callback
+// GET /auth/google/callback
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/login' }),
+  (req, res) => {
+    res.redirect('/api/profile');
   }
-});
+);
 
-// Register a new user
-// POST /api/auth/register
+// Local register (email/password)
+// POST /auth/register
 router.post('/register', async (req, res) => {
   try {
     const user = await User.register(req.body);
-    const token = createToken(user._id);
 
     // Destructure the user object to hide the password
     const { password, ...userData } = user.toObject();
 
-    res.status(201).json({ token, user: userData });
+    res.status(201).json({ user: userData });
   } catch (err) {
     const message = err.code === 11000 ? 'User already exists' : err.message;
 
     res.status(409).json({ message });
   }
+});
+
+// Logout
+// GET /auth/logout
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect('/');
+  });
 });
 
 export default router;
