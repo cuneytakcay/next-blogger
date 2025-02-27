@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
+import MongoStore from 'connect-mongo';
 import passport from './passportConfig.js';
 import postsRoute from './routes/postsRoute.js';
 import googleAuthRoute from './routes/googleAuthRoute.js';
+import userRoute from './routes/userRoute.js';
 
 dotenv.config();
 
@@ -28,6 +30,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false }, // Set secure: true in production with HTTPS
+    store: MongoStore.create({ mongoUrl: MONGO_URI }),
   })
 );
 app.use(passport.initialize());
@@ -37,6 +41,7 @@ app.use(express.json());
 // Routes
 app.use('/auth/google', googleAuthRoute);
 app.use('/api/posts', postsRoute);
+app.use('/api/profile', userRoute);
 
 // MongoDB connection
 mongoose
