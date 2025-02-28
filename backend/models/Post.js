@@ -9,9 +9,12 @@ const postSchema = new Schema(
     content: {
       type: String,
       required: true,
+      minLength: 500,
+      maxLength: 5000,
     },
     author: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     categories: {
@@ -21,6 +24,15 @@ const postSchema = new Schema(
         validator: (categories) => categories.length > 0,
         message: 'At least one category is required',
       },
+      enum: ['Technology', 'Business', 'Entertainment', 'Health', 'Science'],
+    },
+    tags: {
+      type: [String],
+      default: [],
+    },
+    isPublished: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
