@@ -21,11 +21,11 @@ router.get(
   }
 );
 
-// Local register (email/password)
+// Local register (firstName/lastName/email/password)
 // POST /auth/register
 router.post('/register', async (req, res) => {
   try {
-    const user = await User.register(req.body);
+    const user = await User.registerLocal(req.body);
 
     // Destructure the user object to hide the password
     const { password, ...userData } = user.toObject();
@@ -36,6 +36,15 @@ router.post('/register', async (req, res) => {
 
     res.status(409).json({ message });
   }
+});
+
+// Local login (email/password)
+// POST /auth/login
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  // Destructure the user object to hide the password
+  const { password, ...user } = req.user.toObject();
+
+  res.status(200).json({ user });
 });
 
 // Logout

@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
-import CryptoJS from 'crypto-js';
 import User from './models/User.js';
 
 // Can't get clientID without this.
@@ -22,15 +21,7 @@ passport.use(
         let user = await User.findOne({ googleId: profile.id });
 
         if (!user) {
-          // Create a new user if not found
-          user = new User({
-            googleId: profile.id,
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            avatar: profile.photos[0].value,
-          });
-
-          await user.save();
+          user = await User.registerGoogle(profile);
         }
 
         return done(null, user);
@@ -56,14 +47,10 @@ passport.use(
           return done(null, false, { message: 'Invalid credentials...' });
         }
 
-        const bytes = CryptoJS.AES.decrypt(
-          user.password,
-          process.env.CRYPTO_SECRET
-        );
+        // Compare entered password with the one stored in the database
+        const validPassword = await user.comparePassword(password);
 
-        const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
-
-        if (originalPassword !== password)
+        if (!validPassword)
           return done(null, false, { message: 'Invalid credentials...' });
 
         return done(null, user);
@@ -81,6 +68,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   const user = await User.findById(id);
+
   done(null, user);
 });
 
