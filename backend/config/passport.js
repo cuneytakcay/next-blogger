@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from './models/User.js';
+import User from '../models/User.js';
 
 // Can't get clientID without this.
 // Figure out the reason and fix it then remove this import

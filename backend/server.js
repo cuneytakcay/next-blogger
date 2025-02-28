@@ -4,7 +4,7 @@ import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
-import passport from './passportConfig.js';
+import passport from './config/passport.js';
 import postsRoute from './routes/postsRoute.js';
 import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
