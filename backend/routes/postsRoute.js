@@ -27,9 +27,9 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new post
-// POST /api/posts
-router.post('/', async (req, res) => {
+// Create a new draft of a post
+// POST /api/posts/draft
+router.post('/draft', async (req, res) => {
   const { title, content, author, categories } = req.body;
 
   const newPost = new Post({
@@ -45,6 +45,22 @@ router.post('/', async (req, res) => {
     res.status(201).json(savedPost);
   } catch (err) {
     res.status(500).json({ message: 'Could not create post...' });
+  }
+});
+
+// Update a draft of a post
+// PATCH /api/posts/:id
+router.patch('/:id', async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'Post updated successfully', post });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
   }
 });
 
