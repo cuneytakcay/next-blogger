@@ -1,11 +1,9 @@
+import dotenv from 'dotenv';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as LocalStrategy } from 'passport-local';
 import User from '../models/User.js';
 
-// Can't get clientID without this.
-// Figure out the reason and fix it then remove this import
-import dotenv from 'dotenv';
 dotenv.config();
 
 // If the user chooses to login with Google
@@ -67,9 +65,13 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id);
+  try {
+    const user = await User.findById(id);
 
-  done(null, user);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
 });
 
 export default passport;
