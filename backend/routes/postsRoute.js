@@ -101,4 +101,20 @@ router.patch('/publish/:id', async (req, res) => {
   }
 });
 
+// Revert a published post to a draft
+// PATCH /api/posts/revert/:id
+router.patch('/revert/:id', async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { isPublished: false },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'Post reverted successfully', post });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export default router;
