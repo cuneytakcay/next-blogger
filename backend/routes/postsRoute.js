@@ -64,4 +64,25 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
+// Delete a draft of a post
+// DELETE /api/posts/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    // Make sure the post is a draft
+    const post = await Post.findById(req.params.id);
+
+    if (post.isPublished) {
+      return res
+        .status(400)
+        .json({ message: 'Published posts cannot be deleted' });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+});
+
 export default router;
