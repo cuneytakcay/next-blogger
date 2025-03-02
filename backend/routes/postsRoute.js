@@ -50,7 +50,7 @@ router.post('/draft', async (req, res) => {
 
 // Update a draft of a post
 // PATCH /api/posts/:id
-router.patch('/:id', async (req, res) => {
+router.patch('/draft/:id', async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
       req.params.id,
@@ -66,7 +66,7 @@ router.patch('/:id', async (req, res) => {
 
 // Delete a draft of a post
 // DELETE /api/posts/:id
-router.delete('/:id', async (req, res) => {
+router.delete('/draft/:id', async (req, res) => {
   try {
     // Make sure the post is a draft
     const post = await Post.findById(req.params.id);
@@ -80,6 +80,22 @@ router.delete('/:id', async (req, res) => {
     await Post.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+});
+
+// Publish a draft of a post
+// PATCH /api/posts/publish/:id
+router.patch('/publish/:id', async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { isPublished: true },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'Post published successfully', post });
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
