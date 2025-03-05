@@ -12,7 +12,7 @@ const Error = () => {
   // Redirect to the login page after 5 seconds
   useEffect(() => {
     const redirectTimer = setTimeout(() => {
-      navigate('/login');
+      navigate('/');
     }, 3000);
 
     return () => clearTimeout(redirectTimer);
@@ -23,7 +23,7 @@ const Error = () => {
       <h1 className={styles.title}>Oops!</h1>
       <p className={styles.message}>{error.message}</p>
       <FontAwesomeIcon className={styles.spinner} icon={faSpinner} spin />
-      <p className={styles.redirect}>Redirecting to the login page...</p>
+      <p className={styles.redirect}>Redirecting to the homepage...</p>
     </div>
   );
 };

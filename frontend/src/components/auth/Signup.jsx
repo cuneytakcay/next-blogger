@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
+import { setUser } from '../../store/userSlice';
+import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
 
 const Signup = () => {
@@ -10,6 +13,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -31,18 +35,34 @@ const Signup = () => {
         }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        setIsLoading(false);
-        navigate('/login');
+        const userData = await response.json();
+
+        // Set the local storage with the user data and the time stamp
+        // Time stamp will be used to check if the user is logged in for 24 hours
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({ ...userData, timeStamp: Date.now() })
+        );
+
+        dispatch(setUser(userData));
       } else {
+        dispatch(
+          setError({ status: response.status, message: response.statusText })
+        );
         setIsLoading(false);
-        throw new Error(data.message || 'Registration failed');
+        navigate('/error');
       }
     } catch (err) {
-      console.error('Registration error:', err);
+      console.error('catch err', err);
+      dispatch(
+        setError({
+          status: 500,
+          message: 'Something went wrong. Please try again.',
+        })
+      );
       setIsLoading(false);
+      navigate('/error');
     }
   };
 
@@ -81,7 +101,7 @@ const Signup = () => {
           <input
             id='email'
             className={styles.input + ' ' + (email.length && styles.filled)}
-            type='email'
+            type='text'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
