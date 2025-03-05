@@ -1,0 +1,23 @@
+.title {
+  font-family: 'syne-bold';
+  font-size: 2rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.message {
+  font-size: 1.5rem;
+  color: var(--text-light);
+  margin-bottom: 30px;
+}
+
+.spinner {
+  font-size: 4rem;
+  color: var(--coral);
+}
+
+.redirect {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-top: 30px;
+}

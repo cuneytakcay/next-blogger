@@ -40,7 +40,7 @@ const Signup = () => {
   };
 
   return (
-    <div className={styles['form-container']}>
+    <div className='fixed-container'>
       <h1 className={styles.title}>Sign Up</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>

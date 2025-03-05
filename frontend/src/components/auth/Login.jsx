@@ -1,36 +1,56 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { setUser } from '../../store/userSlice';
+import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:5000/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch('http://localhost:5000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const userData = await response.json();
+      if (response.ok) {
+        const userData = await response.json();
 
-    if (response.ok) {
-      dispatch(setUser(userData));
-    } else {
-      console.error('Login failed:', userData.message);
+        // Set the local storage with the user data and the time stamp
+        // Time stamp will be used to check if the user is logged in for 24 hours
+        localStorage.setItem(
+          'userData',
+          JSON.stringify({ ...userData, timeStamp: Date.now() })
+        );
+
+        dispatch(setUser(userData));
+      } else {
+        dispatch(setError({ status: 401, message: 'Login failed.' }));
+        navigate('/error');
+      }
+    } catch (err) {
+      dispatch(
+        setError({
+          status: 500,
+          message: 'Something went wrong. Please try again.',
+        })
+      );
+      navigate('/error');
     }
   };
 
   return (
-    <div className={styles['form-container']}>
+    <div className='fixed-container'>
       <h1 className={styles.title}>Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>
