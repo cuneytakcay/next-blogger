@@ -1,24 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpinner,
+  faHome,
+  faExclamationTriangle,
+  faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { setUser } from '../../store/userSlice';
 import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Validate form
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
+  useEffect(() => {
+    const subscription = watch((data) => {
+      setFormData(data);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  const onSubmit = async (data) => {
     setIsLoading(true);
 
     try {
@@ -27,12 +58,7 @@ const Signup = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-        }),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
@@ -42,10 +68,12 @@ const Signup = () => {
         // Time stamp will be used to check if the user is logged in for 24 hours
         localStorage.setItem(
           'userData',
-          JSON.stringify({ ...userData, timeStamp: Date.now() })
+          JSON.stringify({ ...userData, time: Date.now() })
         );
 
         dispatch(setUser(userData));
+        setIsLoading(false);
+        navigate('/');
       } else {
         dispatch(
           setError({ status: response.status, message: response.statusText })
@@ -53,8 +81,7 @@ const Signup = () => {
         setIsLoading(false);
         navigate('/error');
       }
-    } catch (err) {
-      console.error('catch err', err);
+    } catch (error) {
       dispatch(
         setError({
           status: 500,
@@ -72,54 +99,123 @@ const Signup = () => {
       <Link to='/' className={styles['home-icon']} title='Homepage'>
         <FontAwesomeIcon icon={faHome} />
       </Link>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles['input-container']}>
           <input
             id='firstName'
-            className={styles.input + ' ' + (firstName.length && styles.filled)}
+            className={
+              styles.input + ' ' + (formData.firstName.length && styles.filled)
+            }
             type='text'
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            {...register('firstName', {
+              required: 'Field cannot be empty',
+            })}
           />
           <label htmlFor='firstName' className={styles.label}>
             First Name
           </label>
+          {errors.firstName && (
+            <p className={styles.error}>
+              {errors.firstName.message}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </p>
+          )}
         </div>
         <div className={styles['input-container']}>
           <input
             id='lastName'
-            className={styles.input + ' ' + (lastName.length && styles.filled)}
+            className={
+              styles.input + ' ' + (formData.lastName.length && styles.filled)
+            }
             type='text'
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            {...register('lastName', {
+              required: 'Field cannot be empty',
+            })}
           />
           <label className={styles.label} htmlFor='lastName'>
             Last Name
           </label>
+          {errors.lastName && (
+            <p className={styles.error}>
+              {errors.lastName.message}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </p>
+          )}
         </div>
         <div className={styles['input-container']}>
           <input
             id='email'
-            className={styles.input + ' ' + (email.length && styles.filled)}
-            type='text'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            className={
+              styles.input + ' ' + (formData.email.length && styles.filled)
+            }
+            type='email'
+            {...register('email', {
+              required: 'Field cannot be empty',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Not a valid email address.',
+              },
+            })}
           />
           <label className={styles.label} htmlFor='email'>
             Email
           </label>
+          {errors.email && (
+            <p className={styles.error}>
+              {errors.email.message}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </p>
+          )}
         </div>
         <div className={styles['input-container']}>
           <input
             id='password'
-            className={styles.input + ' ' + (password.length && styles.filled)}
+            className={
+              styles.input + ' ' + (formData.password.length && styles.filled)
+            }
             type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password', {
+              required: 'Password is required',
+              pattern: {
+                value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
+                message: `Not a valid password`,
+              },
+            })}
           />
           <label className={styles.label} htmlFor='password'>
             Password
           </label>
+          {errors.password && (
+            <p className={styles.error}>
+              {errors.password.message}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </p>
+          )}
+        </div>
+        <div className={styles['input-container']}>
+          <input
+            id='confirmPassword'
+            className={
+              styles.input +
+              ' ' +
+              (formData.confirmPassword.length && styles.filled)
+            }
+            type='password'
+            {...register('confirmPassword', {
+              required: 'Password confirmation is required',
+              validate: (value) =>
+                value === formData.password || 'Passwords do not match',
+            })}
+          />
+          <label className={styles.label} htmlFor='confirmPassword'>
+            Confirm Password
+          </label>
+          {errors.confirmPassword && (
+            <p className={styles.error}>
+              {errors.confirmPassword.message}
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+            </p>
+          )}
         </div>
         <button className={styles.button} type='submit' disabled={isLoading}>
           {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign Up'}
