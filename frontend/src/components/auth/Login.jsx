@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
 import { setUser } from '../../store/userSlice';
 import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
@@ -8,11 +10,14 @@ import styles from './auth.module.css';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     try {
       const response = await fetch('http://localhost:5000/auth/login', {
@@ -36,6 +41,7 @@ const Login = () => {
         dispatch(setUser(userData));
       } else {
         dispatch(setError({ status: 401, message: 'Login failed.' }));
+        setIsLoading(false);
         navigate('/error');
       }
     } catch (err) {
@@ -45,6 +51,7 @@ const Login = () => {
           message: 'Something went wrong. Please try again.',
         })
       );
+      setIsLoading(false);
       navigate('/error');
     }
   };
@@ -52,6 +59,9 @@ const Login = () => {
   return (
     <div className='fixed-container'>
       <h1 className={styles.title}>Login</h1>
+      <Link to='/' className={styles['home-icon']} title='Homepage'>
+        <FontAwesomeIcon icon={faHome} />
+      </Link>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>
           <input
@@ -77,8 +87,8 @@ const Login = () => {
             Password
           </label>
         </div>
-        <button className={styles.button} type='submit'>
-          Login
+        <button className={styles.button} type='submit' disabled={isLoading}>
+          {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}
         </button>
       </form>
       <p className={styles.text}>

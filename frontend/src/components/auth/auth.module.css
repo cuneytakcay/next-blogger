@@ -4,6 +4,20 @@
   color: var(--text-light);
 }
 
+.home-icon {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: var(--coral);
+  transition: all 0.2s ease-in-out;
+}
+
+.home-icon:hover {
+  color: var(--brick);
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -61,9 +75,14 @@
   transition: all 0.2s ease-in-out;
 }
 
-.button:hover {
+.button:hover,
+.button:disabled {
   color: var(--white);
   background-color: var(--brick);
+}
+
+.button:disabled {
+  cursor: not-allowed;
 }
 
 .text {

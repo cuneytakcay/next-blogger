@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
 import styles from './auth.module.css';
 
 const Signup = () => {
@@ -7,10 +9,13 @@ const Signup = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     try {
       const response = await fetch('http://localhost:5000/auth/register', {
@@ -29,19 +34,24 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok) {
+        setIsLoading(false);
         navigate('/login');
       } else {
+        setIsLoading(false);
         throw new Error(data.message || 'Registration failed');
       }
     } catch (err) {
       console.error('Registration error:', err);
-      setError(err.message);
+      setIsLoading(false);
     }
   };
 
   return (
     <div className='fixed-container'>
       <h1 className={styles.title}>Sign Up</h1>
+      <Link to='/' className={styles['home-icon']} title='Homepage'>
+        <FontAwesomeIcon icon={faHome} />
+      </Link>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>
           <input
@@ -91,8 +101,8 @@ const Signup = () => {
             Password
           </label>
         </div>
-        <button className={styles.button} type='submit'>
-          Sign Up
+        <button className={styles.button} type='submit' disabled={isLoading}>
+          {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign Up'}
         </button>
       </form>
       <p className={styles.text}>

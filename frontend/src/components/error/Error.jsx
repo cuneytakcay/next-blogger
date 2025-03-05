@@ -13,7 +13,7 @@ const Error = () => {
   useEffect(() => {
     const redirectTimer = setTimeout(() => {
       navigate('/login');
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(redirectTimer);
   }, [navigate]);
