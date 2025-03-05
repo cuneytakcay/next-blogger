@@ -1,5 +1,31 @@
 @import './variables.css';
 
+/* FONTS */
+@font-face {
+  font-family: 'syne-bold';
+  src: url('./assets/fonts/Syne-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'syne-extrabold';
+  src: url('./assets/fonts/Syne-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'syne-medium';
+  src: url('./assets/fonts/Syne-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'syne-regular';
+  src: url('./assets/fonts/Syne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'syne-semibold';
+  src: url('./assets/fonts/Syne-SemiBold.ttf') format('truetype');
+}
+
 html,
 body,
 * {
@@ -9,5 +35,10 @@ body,
 }
 
 body {
-  background-color: var(--background);
+  font-family: 'syne-regular', sans-serif;
+  background-color: var(--bg-dark);
+}
+
+button {
+  font-family: 'syne-bold', sans-serif;
 }
