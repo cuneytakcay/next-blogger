@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { setUser } from '../../store/userSlice';
 import styles from './auth.module.css';
 
@@ -60,6 +61,13 @@ const Login = () => {
           Login
         </button>
       </form>
+      <p className={styles.text}>
+        Don't have an account?{' '}
+        <Link to='/signup' className={styles.link}>
+          Sign up
+        </Link>{' '}
+        here
+      </p>
     </div>
   );
 };

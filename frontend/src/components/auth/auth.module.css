@@ -77,3 +77,18 @@
 .button:hover {
   background-color: var(--secondary-green);
 }
+
+.text {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.text a {
+  color: var(--primary-yellow);
+  text-decoration: none;
+}
+
+.text a:hover {
+  text-decoration: underline;
+}
