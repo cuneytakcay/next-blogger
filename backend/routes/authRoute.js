@@ -51,9 +51,22 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 // GET /auth/logout
 router.get('/logout', (req, res) => {
   req.logout((err) => {
-    if (err) return next(err);
+    if (err) {
+      return res.status(500).json({
+        message: 'An error occurred during logout. Please try again.',
+      });
+    }
 
-    res.redirect('/');
+    // Destroy the session from DB
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Failed to clear session.',
+        });
+      }
+
+      res.status(200).json({ message: 'Logout successful' });
+    });
   });
 });
 

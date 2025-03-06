@@ -7,20 +7,31 @@ const router = express.Router();
 // Get user profile
 // GET /api/profile
 router.get('/', isAuthenticated, (req, res) => {
-  const { _id, name, email, avatar, role, bio, posts } = req.user;
+  try {
+    const { _id, name, email, avatar, role, bio, posts } = req.user;
 
-  res.json({
-    message: 'User profile data',
-    user: {
-      _id,
-      name,
-      email,
-      avatar,
-      role,
-      bio,
-      posts,
-    },
-  });
+    // Check if all necessary user data exists
+    if (!_id || !name || !email) {
+      return res.status(400).json({
+        message: 'Missing required user data.',
+      });
+    }
+
+    res.status(200).json({
+      message: 'User profile data retrieved successfully',
+      user: {
+        _id,
+        name,
+        email,
+        avatar,
+        role,
+        bio,
+        posts,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Could not get user profile...' });
+  }
 });
 
 // Update user profile
