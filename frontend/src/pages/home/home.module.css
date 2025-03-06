@@ -1,0 +1,20 @@
+.title {
+  font-family: 'syne-extrabold', sans-serif;
+  color: var(--coral);
+  line-height: 1;
+}
+
+.message {
+  font-family: 'syne-medium', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  letter-spacing: 2px;
+  line-height: 1.25;
+}
+
+.text-container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 700px;
+}
