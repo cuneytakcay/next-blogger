@@ -1,8 +1,22 @@
 .title {
   font-family: 'syne-bold';
   font-size: 2rem;
-  color: var(--text-light);
+  color: var(--coral);
   margin-bottom: 20px;
+}
+
+.home-icon {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: var(--coral);
+  transition: all 0.2s ease-in-out;
+}
+
+.home-icon:hover {
+  color: var(--brick);
 }
 
 .message {

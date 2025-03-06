@@ -5,6 +5,7 @@ import { setUser } from './store/userSlice';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
 import Error from './components/error/Error';
+import NotFound from './components/error/NotFound';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/error' element={<Error />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
   );
