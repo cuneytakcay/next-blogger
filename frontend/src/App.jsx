@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from './store/userSlice';
 
 // Pages
+import Header from './components/header/Header';
 import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
@@ -31,6 +32,7 @@ const App = () => {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />

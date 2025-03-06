@@ -1,0 +1,132 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--bg-dark);
+  color: var(--white);
+  position: relative;
+  z-index: 1000;
+}
+
+.menu-open {
+  background-color: var(--gray);
+  color: var(--black);
+}
+
+.logo h1 {
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-button {
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  transition: color 0.2s ease-in-out;
+}
+
+.menu-open .menu-button {
+  color: var(--black);
+}
+
+.menu-button:hover {
+  color: var(--coral);
+}
+
+.menu-open .menu-button:hover {
+  color: var(--brick);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 68px;
+  right: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 68px);
+  background-color: var(--gray);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 0;
+  font-family: 'syne-extrabold', sans-serif;
+  font-size: 1.5rem;
+  color: var(--white);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.dropdown-menu a:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--brick);
+}
+
+.active-link {
+  color: var(--brick) !important;
+  pointer-events: none;
+}
+
+.logout-button {
+  border: none;
+  background-color: transparent;
+  color: var(--white);
+  cursor: pointer;
+  font-family: 'syne-bold', sans-serif;
+  font-size: 1.25rem;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.menu-open .logout-button {
+  color: var(--black);
+}
+
+.logout-button:hover {
+  color: var(--coral);
+}
+
+.menu-open .logout-button:hover {
+  color: var(--brick);
+}
+
+.user {
+  font-size: 1.25rem;
+  color: var(--white);
+}
+
+.menu-open .user {
+  color: var(--black);
+}
+
+.user:hover {
+  color: var(--coral);
+}
+
+.menu-open .user:hover {
+  color: var(--brick);
+}

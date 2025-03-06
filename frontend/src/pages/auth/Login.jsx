@@ -50,10 +50,10 @@ const Login = () => {
 
   return (
     <div className='fixed-container'>
-      <h1 className={styles.title}>Login</h1>
       <Link to='/' className={styles['home-icon']} title='Homepage'>
         <FontAwesomeIcon icon={faHome} />
       </Link>
+      <h1 className={styles.title}>Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>
           <input

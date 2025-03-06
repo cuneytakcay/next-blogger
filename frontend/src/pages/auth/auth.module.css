@@ -5,17 +5,14 @@
 }
 
 .home-icon {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 1.5rem;
-  color: var(--coral);
+  color: var(--white);
+  margin-bottom: 20px;
   transition: all 0.2s ease-in-out;
 }
 
 .home-icon:hover {
-  color: var(--brick);
+  color: var(--coral);
 }
 
 .form {
