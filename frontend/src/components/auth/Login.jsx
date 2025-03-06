@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
 import { setUser } from '../../store/userSlice';
@@ -20,37 +21,28 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const { data } = await axios.post('http://localhost:5000/auth/login', {
+        email,
+        password,
       });
 
-      if (response.ok) {
-        const userData = await response.json();
-
-        // Set the local storage with the user data and the time stamp
-        // Time stamp will be used to check if the user is logged in for 24 hours
-        localStorage.setItem(
-          'userData',
-          JSON.stringify({ ...userData, timeStamp: Date.now() })
-        );
-
-        dispatch(setUser(userData));
-      } else {
-        dispatch(setError({ status: 401, message: 'Login failed.' }));
-        setIsLoading(false);
-        navigate('/error');
-      }
-    } catch (err) {
-      dispatch(
-        setError({
-          status: 500,
-          message: 'Something went wrong. Please try again.',
-        })
+      // Set the local storage with the user data and the time stamp
+      // Time stamp will be used to check if the user is logged in for 24 hours
+      localStorage.setItem(
+        'userData',
+        JSON.stringify({ ...data, timeStamp: Date.now() })
       );
+
+      dispatch(setUser(data));
+      setIsLoading(false);
+      navigate('/');
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || 'Login failed. Please try again.';
+      const errorStatus = err.response?.status || 500;
+
+      dispatch(setError({ status: errorStatus, message: errorMessage }));
+
       setIsLoading(false);
       navigate('/error');
     }

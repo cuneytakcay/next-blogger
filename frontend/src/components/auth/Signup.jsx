@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSpinner,
@@ -31,15 +32,7 @@ const Signup = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-  });
+  } = useForm();
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -53,41 +46,37 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      const response = await axios.post('http://localhost:5000/auth/register', {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
       });
 
-      if (response.ok) {
-        const userData = await response.json();
-
+      if (response.status >= 200 && response.status < 300) {
         // Set the local storage with the user data and the time stamp
         // Time stamp will be used to check if the user is logged in for 24 hours
         localStorage.setItem(
           'userData',
-          JSON.stringify({ ...userData, time: Date.now() })
+          JSON.stringify({ ...response.data, time: Date.now() })
         );
 
-        dispatch(setUser(userData));
-        setIsLoading(false);
-        navigate('/');
+        dispatch(setUser(response.data));
       } else {
         dispatch(
           setError({ status: response.status, message: response.statusText })
         );
-        setIsLoading(false);
-        navigate('/error');
       }
-    } catch (error) {
-      dispatch(
-        setError({
-          status: 500,
-          message: 'Something went wrong. Please try again.',
-        })
-      );
+
+      setIsLoading(false);
+      navigate('/');
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || 'Registration failed. Please try again.';
+      const errorStatus = err.response?.status || 500;
+
+      dispatch(setError({ status: errorStatus, message: errorMessage }));
+
       setIsLoading(false);
       navigate('/error');
     }
