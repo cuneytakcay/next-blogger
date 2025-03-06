@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from './store/userSlice';
-import Login from './components/auth/Login';
-import Signup from './components/auth/Signup';
-import Error from './components/error/Error';
-import NotFound from './components/error/NotFound';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import Error from './pages/error/Error';
+import NotFound from './pages/error/NotFound';
 
 const App = () => {
   const dispatch = useDispatch();
