@@ -74,6 +74,40 @@
   color: var(--brick);
 }
 
+.error + .question {
+  display: none;
+}
+
+.question {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.question svg {
+  font-size: 1.25rem;
+  color: var(--brick);
+}
+
+.tooltip {
+  display: none;
+  position: absolute;
+  bottom: 25px;
+  right: -20px;
+  width: 300px;
+  padding: 10px;
+  background-color: var(--gray);
+  color: var(--text-dark);
+  border-radius: 4px;
+  margin: 0;
+  text-align: center;
+}
+
+.question:hover .tooltip {
+  display: block;
+}
+
 .button {
   padding: 0 20px;
   border: none;

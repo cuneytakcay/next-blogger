@@ -180,6 +180,13 @@ const Signup = () => {
               <FontAwesomeIcon icon={faExclamationTriangle} />
             </p>
           )}
+          <div className={styles.question}>
+            <FontAwesomeIcon icon={faQuestionCircle} />
+            <p className={styles.tooltip}>
+              Password must contain at least one number and at least one special
+              character and must be at least 8 characters long
+            </p>
+          </div>
         </div>
         <div className={styles['input-container']}>
           <input
