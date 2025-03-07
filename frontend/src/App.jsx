@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
+import Posts from './pages/posts/Posts';
 import Error from './pages/error/Error';
 import NotFound from './pages/error/NotFound';
 
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/posts' element={<Posts />} />
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
