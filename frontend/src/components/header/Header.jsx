@@ -13,10 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   const handleLogout = async () => {
     try {
       await axios.get('http://localhost:5000/auth/logout');
@@ -34,81 +30,86 @@ const Header = () => {
     <header
       className={styles.header + ' ' + (isMenuOpen && styles['menu-open'])}
     >
-      <div className={styles.logo}>
-        <h1>BlogSphere</h1>
-      </div>
-      <nav className={styles.nav}>
-        {userData && (
-          <>
+      <nav className={styles['nav-top']} aria-label='Secondary navigation'>
+        {userData ? (
+          <div>
             <NavLink
               to='/profile'
               className={({ isActive }) =>
                 isActive ? styles['active-link'] : ''
               }
-              title={userData.name + ' ' + 'Profile Page'}
+              title='Profile'
             >
-              <FontAwesomeIcon className={styles.user} icon={faUser} />
+              <FontAwesomeIcon icon={faUser} />
             </NavLink>
             <button className={styles['logout-button']} onClick={handleLogout}>
               Logout
             </button>
-          </>
-        )}
-        <button className={styles['menu-button']} onClick={toggleMenu}>
-          {!isMenuOpen ? (
-            <FontAwesomeIcon icon={faBars} />
-          ) : (
-            <FontAwesomeIcon icon={faClose} />
-          )}
-        </button>
-        {isMenuOpen && (
-          <div className={styles['dropdown-menu']}>
-            {userData ? (
-              <>
-                <NavLink
-                  to='/'
-                  className={({ isActive }) =>
-                    isActive ? styles['active-link'] : ''
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Link 1
-                </NavLink>
-                <NavLink
-                  to='/'
-                  className={({ isActive }) =>
-                    isActive ? styles['active-link'] : ''
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Link 2
-                </NavLink>
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to='/login'
-                  className={({ isActive }) =>
-                    isActive ? styles['active-link'] : ''
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Login
-                </NavLink>
-                <NavLink
-                  to='/signup'
-                  className={({ isActive }) =>
-                    isActive ? styles['active-link'] : ''
-                  }
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign Up
-                </NavLink>
-              </>
-            )}
+          </div>
+        ) : (
+          <div>
+            <NavLink
+              to='/login'
+              className={({ isActive }) =>
+                isActive ? styles['active-link'] : ''
+              }
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to='/signup'
+              className={({ isActive }) =>
+                isActive ? styles['active-link'] : ''
+              }
+            >
+              Sign Up
+            </NavLink>
           </div>
         )}
       </nav>
+      <div className={styles['nav-bottom']}>
+        <div className={styles.logo}>
+          <h1>BlogSphere</h1>
+        </div>
+        <nav className={styles.nav} aria-label='Main navigation'>
+          <button
+            className={styles['menu-button']}
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+          {isMenuOpen && (
+            <div className={styles['dropdown-menu']}>
+              <button
+                className={styles['menu-button']}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <FontAwesomeIcon icon={faClose} />
+              </button>
+              {userData && (
+                <NavLink
+                  to='/profile'
+                  className={({ isActive }) =>
+                    isActive ? styles['active-link'] : ''
+                  }
+                  title={userData.name + ' ' + 'Profile Page'}
+                >
+                  Profile
+                </NavLink>
+              )}
+              <NavLink
+                to='/posts'
+                className={({ isActive }) =>
+                  isActive ? styles['active-link'] : ''
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog Posts
+              </NavLink>
+            </div>
+          )}
+        </nav>
+      </div>
     </header>
   );
 };

@@ -1,16 +1,48 @@
 .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-top > div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  height: 40px;
+  padding: 0 20px;
+  background-color: var(--coral);
+}
+
+.nav-top a {
+  display: block;
+  font-family: 'syne-medium', sans-serif;
+  font-size: 1.125rem;
+  color: var(--black);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-top a:hover {
+  color: var(--brick);
+}
+
+.nav-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: var(--bg-dark);
+  background-color: var(--black);
   color: var(--white);
-  position: relative;
-  z-index: 1000;
 }
 
 .menu-open {
-  background-color: var(--gray);
+  background-color: var(--coral);
+}
+
+.menu-open .nav-bottom {
   color: var(--black);
 }
 
@@ -52,17 +84,24 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 68px;
+  top: 0;
   right: 0;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 68px);
+  min-height: 100vh;
   background-color: var(--gray);
   z-index: 1000;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
+  gap: 10px;
+}
+
+.dropdown-menu .menu-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .dropdown-menu a {
@@ -70,7 +109,7 @@
   padding: 10px 0;
   font-family: 'syne-extrabold', sans-serif;
   font-size: 1.5rem;
-  color: var(--white);
+  color: var(--brick);
   text-decoration: none;
   position: relative;
   transition: all 0.2s ease-in-out;
@@ -102,31 +141,10 @@
   transition: all 0.2s ease-in-out;
 }
 
-.menu-open .logout-button {
+.logout-button {
   color: var(--black);
 }
 
 .logout-button:hover {
-  color: var(--coral);
-}
-
-.menu-open .logout-button:hover {
-  color: var(--brick);
-}
-
-.user {
-  font-size: 1.25rem;
-  color: var(--white);
-}
-
-.menu-open .user {
-  color: var(--black);
-}
-
-.user:hover {
-  color: var(--coral);
-}
-
-.menu-open .user:hover {
   color: var(--brick);
 }
