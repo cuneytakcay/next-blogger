@@ -4,17 +4,6 @@
   color: var(--text-light);
 }
 
-.home-icon {
-  font-size: 1.5rem;
-  color: var(--white);
-  margin-bottom: 20px;
-  transition: all 0.2s ease-in-out;
-}
-
-.home-icon:hover {
-  color: var(--coral);
-}
-
 .form {
   display: flex;
   flex-direction: column;
@@ -39,7 +28,8 @@
   transition: all 0.2s ease-in-out;
 }
 
-.input {
+.input,
+.textarea {
   padding: 0 20px;
   border: 1px solid var(--black);
   border-radius: 4px;
@@ -51,6 +41,7 @@
   color: var(--text-dark);
 }
 
+.textarea:focus + .label,
 .input:focus + .label,
 .filled + .label {
   transform: none;
@@ -59,50 +50,30 @@
   color: var(--text-light);
 }
 
+.textarea {
+  padding: 20px;
+  height: auto;
+  font-family: 'syne-regular', sans-serif;
+  font-size: 1.125rem;
+}
+
+.textarea + .label {
+  top: 25px;
+}
+
+.textarea.filled + .label {
+  top: -25px;
+}
+
 .error {
   position: absolute;
-  top: 50%;
+  top: 0;
   right: 10px;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: 1rem;
   color: var(--brick);
-}
-
-.error + .question {
-  display: none;
-}
-
-.question {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-}
-
-.question svg {
-  font-size: 1.25rem;
-  color: var(--brick);
-}
-
-.tooltip {
-  display: none;
-  position: absolute;
-  bottom: 25px;
-  right: -20px;
-  width: 300px;
-  padding: 10px;
-  background-color: var(--gray);
-  color: var(--text-dark);
-  border-radius: 4px;
-  margin: 0;
-  text-align: center;
-}
-
-.question:hover .tooltip {
-  display: block;
 }
 
 .button {
@@ -137,13 +108,4 @@
   text-align: center;
   padding: 0 20px;
   max-width: 500px;
-}
-
-.text a {
-  color: var(--coral);
-  text-decoration: none;
-}
-
-.text a:hover {
-  text-decoration: underline;
 }

@@ -137,7 +137,7 @@ const Signup = () => {
             className={
               styles.input + ' ' + (formData.email.length && styles.filled)
             }
-            type='email'
+            type='text'
             {...register('email', {
               required: 'Field cannot be empty',
               pattern: {
