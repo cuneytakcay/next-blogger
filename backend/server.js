@@ -8,6 +8,7 @@ import passport from './config/passport.js';
 import postsRoute from './routes/postsRoute.js';
 import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
+import contactRoute from './routes/contactRoute.js';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
+// CORS options settings
 const corsOptions = {
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -42,6 +44,7 @@ app.use(express.json());
 app.use('/auth', authRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/profile', userRoute);
+app.use('/api/contact', contactRoute);
 
 // MongoDB connection
 mongoose

@@ -37,7 +37,7 @@ const ContactPage = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post('/api/contact', {
+      const res = await axios.post('http://localhost:5000/api/contact', {
         name: data.name,
         email: data.email,
         message: data.message,
