@@ -86,16 +86,35 @@ const Header = () => {
               >
                 <FontAwesomeIcon icon={faClose} />
               </button>
+              <NavLink
+                to='/'
+                className={({ isActive }) =>
+                  isActive ? styles['active-link'] : ''
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </NavLink>
               {userData && (
-                <NavLink
-                  to='/profile'
-                  className={({ isActive }) =>
-                    isActive ? styles['active-link'] : ''
-                  }
-                  title={userData.name + ' ' + 'Profile Page'}
-                >
-                  Profile
-                </NavLink>
+                <>
+                  <NavLink
+                    to='/profile'
+                    className={({ isActive }) =>
+                      isActive ? styles['active-link'] : ''
+                    }
+                  >
+                    Profile
+                  </NavLink>
+                  <NavLink
+                    to='/create-post'
+                    className={({ isActive }) =>
+                      isActive ? styles['active-link'] : ''
+                    }
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Create Post
+                  </NavLink>
+                </>
               )}
               <NavLink
                 to='/posts'
@@ -105,6 +124,24 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog Posts
+              </NavLink>
+              <NavLink
+                to='/about'
+                className={({ isActive }) =>
+                  isActive ? styles['active-link'] : ''
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About BlogSphere
+              </NavLink>
+              <NavLink
+                to='/contact'
+                className={({ isActive }) =>
+                  isActive ? styles['active-link'] : ''
+                }
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
               </NavLink>
             </div>
           )}
