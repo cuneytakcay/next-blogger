@@ -37,6 +37,14 @@ body,
 body {
   font-family: 'syne-regular', sans-serif;
   background-color: var(--bg-dark);
+  background-image: linear-gradient(
+      rgb(50, 63, 75, 1),
+      rgb(50, 63, 75, 0.95),
+      rgb(50, 63, 75, 0.9) 100%
+    ),
+    url('./assets/images/background.jpg');
+  background-size: cover;
+  background-position: top;
 }
 
 h1 {

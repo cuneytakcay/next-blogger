@@ -12,7 +12,7 @@
   gap: 20px;
   height: 40px;
   padding: 0 20px;
-  background-color: var(--coral);
+  background-color: var(--gray);
 }
 
 .nav-top a {
@@ -34,16 +34,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: var(--black);
   color: var(--white);
-}
-
-.menu-open {
-  background-color: var(--coral);
-}
-
-.menu-open .nav-bottom {
-  color: var(--black);
 }
 
 .logo h1 {
@@ -79,12 +70,12 @@
 }
 
 .menu-open .menu-button:hover {
-  color: var(--brick);
+  color: var(--white);
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 0;
+  top: 40px;
   right: 0;
   left: 0;
   width: 100vw;
@@ -100,7 +91,7 @@
 
 .dropdown-menu .menu-button {
   position: absolute;
-  top: 20px;
+  top: 15px;
   right: 20px;
 }
 
@@ -122,11 +113,11 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background-color: var(--brick);
+  background-color: var(--white);
 }
 
 .active-link {
-  color: var(--brick) !important;
+  color: var(--white) !important;
   pointer-events: none;
 }
 
