@@ -6,7 +6,6 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSpinner,
-  faHome,
   faExclamationTriangle,
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -84,9 +83,6 @@ const Signup = () => {
 
   return (
     <div className='fixed-container'>
-      <Link to='/' className={styles['home-icon']} title='Homepage'>
-        <FontAwesomeIcon icon={faHome} />
-      </Link>
       <h1 className={styles.title}>Sign Up</h1>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles['input-container']}>

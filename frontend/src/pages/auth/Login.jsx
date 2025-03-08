@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { setUser } from '../../store/userSlice';
 import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
@@ -50,9 +50,6 @@ const Login = () => {
 
   return (
     <div className='fixed-container'>
-      <Link to='/' className={styles['home-icon']} title='Homepage'>
-        <FontAwesomeIcon icon={faHome} />
-      </Link>
       <h1 className={styles.title}>Login</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles['input-container']}>

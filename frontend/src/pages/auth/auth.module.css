@@ -4,17 +4,6 @@
   color: var(--text-light);
 }
 
-.home-icon {
-  font-size: 1.5rem;
-  color: var(--white);
-  margin-bottom: 20px;
-  transition: all 0.2s ease-in-out;
-}
-
-.home-icon:hover {
-  color: var(--coral);
-}
-
 .form {
   display: flex;
   flex-direction: column;
