@@ -92,5 +92,5 @@ button {
 
 ::selection {
   color: var(--black);
-  background-color: var(--gray);
+  background-color: var(--coral);
 }

@@ -5,7 +5,7 @@
   z-index: 1000;
 }
 
-.nav-top > div {
+.nav-top {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -13,6 +13,10 @@
   height: 40px;
   padding: 0 20px;
   background-color: var(--gray);
+}
+
+.scrolled:not(.menu-open) .nav-top {
+  padding-right: 80px;
 }
 
 .nav-top a {
@@ -38,12 +42,23 @@
 }
 
 .logo h1 {
+  line-height: 1;
   margin: 0;
+}
+
+.scrolled:not(.menu-open) .logo h1 {
+  position: absolute;
+  top: -5px;
 }
 
 .logo a {
   color: var(--white);
   text-decoration: none;
+}
+
+.scrolled:not(.menu-open) .logo a {
+  font-size: 1.75rem;
+  color: var(--black);
 }
 
 .nav {
@@ -64,6 +79,17 @@
   justify-content: center;
   background-color: transparent;
   transition: color 0.2s ease-in-out;
+}
+
+.scrolled:not(.menu-open) .menu-button {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  color: var(--black);
+}
+
+.scrolled:not(.menu-open) .menu-button:hover {
+  color: var(--brick);
 }
 
 .menu-open .menu-button {
@@ -99,33 +125,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .dropdown-menu .menu-button {
   position: absolute;
   top: 15px;
-  right: 20px;
+  border: 2px solid var(--black);
+  border-radius: 4px;
+}
+
+.dropdown-menu .menu-button:hover {
+  color: var(--black);
+  background-color: var(--white);
 }
 
 .dropdown-menu a {
   display: block;
-  padding: 10px 0;
   font-family: 'syne-extrabold', sans-serif;
   font-size: 1.5rem;
   color: var(--black);
   text-decoration: none;
   position: relative;
   transition: all 0.2s ease-in-out;
+  border-radius: 4px;
 }
 
-.dropdown-menu a:hover::after {
-  content: '';
-  position: absolute;
-  bottom: 3px;
-  left: 0;
-  width: 100%;
-  height: 2px;
+.dropdown-menu a:hover {
   background-color: var(--white);
 }
 

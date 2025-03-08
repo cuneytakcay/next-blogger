@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -9,9 +9,24 @@ import styles from './header.module.css';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const userData = useSelector((state) => state.user.userData);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = async () => {
     setIsMenuOpen(false);
@@ -30,11 +45,17 @@ const Header = () => {
 
   return (
     <header
-      className={styles.header + ' ' + (isMenuOpen && styles['menu-open'])}
+      className={
+        styles.header +
+        ' ' +
+        (isMenuOpen && styles['menu-open']) +
+        ' ' +
+        (isScrolled && styles['scrolled'])
+      }
     >
-      <nav className={styles['nav-top']} aria-label='Secondary navigation'>
+      <nav aria-label='Secondary navigation'>
         {userData ? (
-          <div>
+          <div className={styles['nav-top']}>
             <NavLink
               to='/profile'
               className={({ isActive }) =>
@@ -51,7 +72,7 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div>
+          <div className={styles['nav-top']}>
             <NavLink
               to='/login'
               className={({ isActive }) =>
