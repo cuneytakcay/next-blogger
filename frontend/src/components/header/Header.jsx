@@ -14,6 +14,8 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
+    setIsMenuOpen(false);
+
     try {
       await axios.get('http://localhost:5000/auth/logout');
 
@@ -39,6 +41,8 @@ const Header = () => {
                 isActive ? styles['active-link'] : ''
               }
               title='Profile'
+              aria-label='Profile'
+              onClick={() => setIsMenuOpen(false)}
             >
               <FontAwesomeIcon icon={faUser} />
             </NavLink>
@@ -53,6 +57,7 @@ const Header = () => {
               className={({ isActive }) =>
                 isActive ? styles['active-link'] : ''
               }
+              onClick={() => setIsMenuOpen(false)}
             >
               Login
             </NavLink>
@@ -61,6 +66,7 @@ const Header = () => {
               className={({ isActive }) =>
                 isActive ? styles['active-link'] : ''
               }
+              onClick={() => setIsMenuOpen(false)}
             >
               Sign Up
             </NavLink>
@@ -69,7 +75,9 @@ const Header = () => {
       </nav>
       <div className={styles['nav-bottom']}>
         <div className={styles.logo}>
-          <h1>BlogSphere</h1>
+          <h1>
+            <NavLink to='/'>BlogSphere</NavLink>
+          </h1>
         </div>
         <nav className={styles.nav} aria-label='Main navigation'>
           <button
