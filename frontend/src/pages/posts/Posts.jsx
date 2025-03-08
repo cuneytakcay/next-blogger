@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setPosts } from '../../store/postsSlice';
+import PostItem from './PostItem';
+import styles from './posts.module.css';
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -19,9 +21,12 @@ const Posts = () => {
 
   return (
     <div className='fixed-container'>
-      {posts.map((post) => (
-        <h1 key={post._id}>{post.title}</h1>
-      ))}
+      <h1 className={styles.heading}>Posts</h1>
+      <div className={styles.posts}>
+        {posts.map((post) => (
+          <PostItem key={post._id} post={post} />
+        ))}
+      </div>
     </div>
   );
 };
