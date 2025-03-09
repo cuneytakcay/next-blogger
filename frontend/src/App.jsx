@@ -12,6 +12,7 @@ import Signup from './pages/auth/Signup';
 import Posts from './pages/posts/Posts';
 import Error from './pages/error/Error';
 import NotFound from './pages/error/NotFound';
+import LoginSuccess from './pages/auth/LoginSuccess';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const App = () => {
       const { user, timeStamp } = JSON.parse(userData);
 
       if (Date.now() - timeStamp < 24 * 60 * 60 * 1000) {
-        dispatch(setUser(user));
+        dispatch(setUser({ user }));
       } else {
         localStorage.removeItem('userData');
       }
@@ -40,6 +41,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/login-success' element={<LoginSuccess />} />
         <Route path='/posts' element={<Posts />} />
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<NotFound />} />

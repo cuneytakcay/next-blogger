@@ -17,7 +17,9 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/login' }),
   (req, res) => {
-    res.redirect('/api/profile');
+    res.redirect(
+      `http://localhost:5173/login-success?userData=${JSON.stringify(req.user)}`
+    );
   }
 );
 

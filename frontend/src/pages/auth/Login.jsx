@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { setUser } from '../../store/userSlice';
 import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
@@ -48,6 +49,10 @@ const Login = () => {
     }
   };
 
+  const loginWithGoogle = () => {
+    window.location.href = 'http://localhost:5000/auth/google';
+  };
+
   return (
     <div className='fixed-container'>
       <h1 className={styles.title}>Login</h1>
@@ -78,6 +83,14 @@ const Login = () => {
         </div>
         <button className={styles.button} type='submit' disabled={isLoading}>
           {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}
+        </button>
+        <button
+          className={styles.button + ' ' + styles.google}
+          type='button'
+          onClick={loginWithGoogle}
+        >
+          <FontAwesomeIcon icon={faGoogle} aria-label='Google' /> Continue with
+          Google
         </button>
       </form>
       <p className={styles.text}>

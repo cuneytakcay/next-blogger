@@ -9,6 +9,7 @@ import {
   faExclamationTriangle,
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { setUser } from '../../store/userSlice';
 import { setError } from '../../store/errorSlice';
 import styles from './auth.module.css';
@@ -79,6 +80,10 @@ const Signup = () => {
       setIsLoading(false);
       navigate('/error');
     }
+  };
+
+  const signupWithGoogle = () => {
+    window.location.href = 'http://localhost:5000/auth/google';
   };
 
   return (
@@ -211,6 +216,14 @@ const Signup = () => {
         </div>
         <button className={styles.button} type='submit' disabled={isLoading}>
           {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sign Up'}
+        </button>
+        <button
+          className={styles.button + ' ' + styles.google}
+          type='button'
+          onClick={signupWithGoogle}
+        >
+          <FontAwesomeIcon icon={faGoogle} aria-label='Google' /> Continue with
+          Google
         </button>
       </form>
       <p className={styles.text}>

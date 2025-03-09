@@ -131,6 +131,7 @@ const Header = () => {
                     className={({ isActive }) =>
                       isActive ? styles['active-link'] : ''
                     }
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     Profile
                   </NavLink>

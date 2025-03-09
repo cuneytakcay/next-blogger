@@ -136,3 +136,36 @@
 .text a:hover {
   text-decoration: underline;
 }
+
+.google {
+  border: none;
+  background-color: var(--white);
+  max-width: 460px;
+  font-size: 1rem;
+  color: #f90101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.google svg {
+  font-size: 1.5rem;
+  color: #0266c8;
+  transition: all 0.2s ease-in-out;
+}
+
+.google:hover svg {
+  color: var(--white);
+}
+
+.spinner {
+  font-size: 4rem;
+  color: var(--coral);
+}
+
+.redirect {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-top: 30px;
+}
