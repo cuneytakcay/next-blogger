@@ -10,6 +10,7 @@ import Contact from './pages/contact/Contact';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import Posts from './pages/posts/Posts';
+import PostCreator from './pages/postCreate/PostCreator';
 import Error from './pages/error/Error';
 import NotFound from './pages/error/NotFound';
 import LoginSuccess from './pages/auth/LoginSuccess';
@@ -43,6 +44,7 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login-success' element={<LoginSuccess />} />
         <Route path='/posts' element={<Posts />} />
+        <Route path='/create-post' element={<PostCreator />} />
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

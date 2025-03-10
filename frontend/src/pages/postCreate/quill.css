@@ -1,0 +1,101 @@
+/* Toolbar */
+.ql-toolbar {
+  border: none !important;
+  border-radius: 4px !important;
+  background-color: var(--white) !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  padding: 10px !important;
+  font-family: 'syne-semibold', sans-serif !important;
+}
+
+.ql-toolbar .ql-stroke {
+  stroke: var(--black) !important;
+}
+
+.ql-toolbar .ql-fill {
+  fill: var(--black) !important;
+}
+
+.ql-formats {
+  margin: 0 !important;
+}
+
+.ql-formats button {
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  padding: 0 !important;
+  border-radius: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ql-active {
+  pointer-events: none;
+}
+
+button:hover .ql-stroke,
+button:hover .ql-fill,
+.ql-strike:hover {
+  stroke: var(--coral) !important;
+}
+
+button.ql-active .ql-stroke {
+  stroke: var(--brick) !important;
+}
+
+.ql-container {
+  border: none !important;
+  border-radius: 4px !important;
+  background-color: var(--white) !important;
+}
+
+.ql-editor {
+  padding: 20px !important;
+  min-height: 400px !important;
+}
+
+.ql-picker {
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+.ql-picker.ql-header {
+  width: 110px !important;
+}
+
+.ql-picker-label:hover,
+.ql-picker-item:hover,
+.ql-picker-item.ql-active {
+  color: var(--coral) !important;
+}
+
+.ql-picker-item.ql-selected {
+  color: var(--brick) !important;
+}
+
+.ql-picker-label:hover .ql-stroke {
+  stroke: var(--coral) !important;
+}
+
+.ql-picker-label.ql-active {
+  color: var(--brick) !important;
+}
+
+.ql-picker-label.ql-active .ql-stroke {
+  stroke: var(--brick) !important;
+}
+
+button:hover .ql-fill,
+.ql-picker-label:hover .ql-fill {
+  fill: var(--black) !important;
+}
+
+/* Container */
+.ql-container a {
+  color: var(--coral) !important;
+}
