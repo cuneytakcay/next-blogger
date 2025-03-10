@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Post from '../models/Post.js';
 
 const router = express.Router();
@@ -30,26 +31,32 @@ router.get('/:id', async (req, res) => {
 // Create a new draft of a post
 // POST /api/posts/draft
 router.post('/draft', async (req, res) => {
-  const { title, content, author, categories } = req.body;
+  const { authorId, title, content, categories } = req.body;
 
-  const newPost = new Post({
-    title,
-    content,
-    author,
-    categories,
-  });
+  if (!mongoose.Types.ObjectId.isValid(authorId)) {
+    return res.status(404).json({ message: 'Invalid user id...' });
+  }
+
+  const updatedId = new mongoose.Types.ObjectId(String(authorId));
 
   try {
+    const newPost = new Post({
+      title,
+      content,
+      author: updatedId,
+      categories,
+    });
+
     const savedPost = await newPost.save();
 
     res.status(201).json(savedPost);
   } catch (err) {
-    res.status(500).json({ message: 'Could not create post...' });
+    res.status(500).json({ message: err.message });
   }
 });
 
 // Update a draft of a post
-// PATCH /api/posts/:id
+// PATCH /api/posts/draft/:id
 router.patch('/draft/:id', async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
@@ -65,7 +72,7 @@ router.patch('/draft/:id', async (req, res) => {
 });
 
 // Delete a draft of a post
-// DELETE /api/posts/:id
+// DELETE /api/posts/draft/:id
 router.delete('/draft/:id', async (req, res) => {
   try {
     // Make sure the post is a draft

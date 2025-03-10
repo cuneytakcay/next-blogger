@@ -1,10 +1,20 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuill } from 'react-quilljs';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { setError } from '../../store/errorSlice';
 import 'quill/dist/quill.snow.css';
 import styles from './postCreator.module.css';
 import './quill.css';
 
 const PostCreator = () => {
+  const user = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { quill, quillRef } = useQuill({
     modules: {
       toolbar: [
@@ -20,15 +30,36 @@ const PostCreator = () => {
   });
 
   const [title, setTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
     if (!title || !quill.container) return;
 
-    const content = quill.root.innerHTML;
+    setIsLoading(true);
 
-    console.log(content);
+    const content = quill.root.innerHTML;
+    try {
+      await axios.post('http://localhost:5000/api/posts/draft', {
+        title,
+        content,
+        authorId: user._id,
+        categories: ['Technology'],
+      });
+
+      setIsLoading(false);
+      navigate('/posts');
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || 'Failed to save post. Please try again.';
+      const errorStatus = err.response?.status || 500;
+
+      dispatch(setError({ status: errorStatus, message: errorMessage }));
+
+      setIsLoading(false);
+      navigate('/error');
+    }
   };
 
   return (
@@ -53,6 +84,7 @@ const PostCreator = () => {
         </div>
         <button className={styles.button} type='submit'>
           Save
+          {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
         </button>
       </form>
     </div>

@@ -9,8 +9,6 @@ const postSchema = new Schema(
     content: {
       type: String,
       required: true,
-      minLength: 500,
-      maxLength: 5000,
     },
     author: {
       type: Schema.Types.ObjectId,
