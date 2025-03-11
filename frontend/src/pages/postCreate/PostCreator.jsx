@@ -31,6 +31,7 @@ const PostCreator = () => {
 
   const [title, setTitle] = useState('');
   const [teaserText, setTeaserText] = useState('');
+  const [category, setCategory] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async (e) => {
@@ -47,7 +48,7 @@ const PostCreator = () => {
         teaserText,
         content,
         authorId: user._id,
-        categories: ['Technology'],
+        category,
       });
 
       setIsLoading(false);
@@ -103,6 +104,25 @@ const PostCreator = () => {
         </div>
         <div className={styles.quill}>
           <div ref={quillRef} />
+        </div>
+        {/* Categories dropdown */}
+        <div className={styles['input-container']}>
+          <select
+            className={styles.input}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value=''>-- Select Category --</option>
+            <option value='Scient & Technology'>Scient & Technology</option>
+            <option value='Business'>Business</option>
+            <option value='Entertainment'>Entertainment</option>
+            <option value='Health'>Health</option>
+            <option value='Sports'>Sports</option>
+            <option value='Travel'>Travel</option>
+            <option value='Lifestyle'>Lifestyle</option>
+            <option value='Other'>Other</option>
+          </select>
         </div>
         <button className={styles.button} type='submit'>
           Save

@@ -19,14 +19,19 @@ const postSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    categories: {
-      type: [String],
+    category: {
+      type: String,
       required: true,
-      validate: {
-        validator: (categories) => categories.length > 0,
-        message: 'At least one category is required',
-      },
-      enum: ['Technology', 'Business', 'Entertainment', 'Health', 'Science'],
+      enum: [
+        'Science & Technology',
+        'Business',
+        'Entertainment',
+        'Health',
+        'Sports',
+        'Travel',
+        'Lifestyle',
+        'Other',
+      ],
     },
     tags: {
       type: [String],
