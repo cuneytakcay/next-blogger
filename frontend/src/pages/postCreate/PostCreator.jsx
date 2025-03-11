@@ -30,6 +30,7 @@ const PostCreator = () => {
   });
 
   const [title, setTitle] = useState('');
+  const [teaserText, setTeaserText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async (e) => {
@@ -43,6 +44,7 @@ const PostCreator = () => {
     try {
       await axios.post('http://localhost:5000/api/posts/draft', {
         title,
+        teaserText,
         content,
         authorId: user._id,
         categories: ['Technology'],
@@ -77,6 +79,26 @@ const PostCreator = () => {
           />
           <label htmlFor='title' className={styles.label}>
             Blog Post Title
+          </label>
+        </div>
+        <div className={styles['input-container']}>
+          <textarea
+            id='teaser-text'
+            rows='3'
+            className={
+              styles.input +
+              ' ' +
+              (teaserText.length && styles.filled) +
+              ' ' +
+              styles.textarea
+            }
+            type='text'
+            value={teaserText}
+            onChange={(e) => setTeaserText(e.target.value)}
+            required
+          />
+          <label htmlFor='teaser-text' className={styles.label}>
+            Teaser Text
           </label>
         </div>
         <div className={styles.quill}>

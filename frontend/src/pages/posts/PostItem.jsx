@@ -13,7 +13,7 @@ const PostItem = ({ post }) => {
       </div>
       <div className={styles.content}>
         <h2 className={styles.title}>{post.title}</h2>
-        <p>{post.content.substring(0, 120)}...</p>
+        <p>{post.teaserText?.substring(0, 120)}...</p>
         <Link to={`/posts/${post._id}`} className={styles['read-more']}>
           Read More
         </Link>

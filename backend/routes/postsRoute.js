@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 // Create a new draft of a post
 // POST /api/posts/draft
 router.post('/draft', async (req, res) => {
-  const { authorId, title, content, categories } = req.body;
+  const { authorId, title, teaserText, content, categories } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(authorId)) {
     return res.status(404).json({ message: 'Invalid user id...' });
@@ -42,6 +42,7 @@ router.post('/draft', async (req, res) => {
   try {
     const newPost = new Post({
       title,
+      teaserText,
       content,
       author: updatedId,
       categories,

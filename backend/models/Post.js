@@ -10,6 +10,10 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    teaserText: {
+      type: String,
+      required: true,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
