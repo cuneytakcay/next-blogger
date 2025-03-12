@@ -9,6 +9,7 @@ import postsRoute from './routes/postsRoute.js';
 import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
 import contactRoute from './routes/contactRoute.js';
+import imageRoute from './routes/imageRoute.js';
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use('/auth', authRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/profile', userRoute);
 app.use('/api/contact', contactRoute);
+app.use('/api/images', imageRoute);
 
 // MongoDB connection
 mongoose
