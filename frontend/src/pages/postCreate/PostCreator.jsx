@@ -29,9 +29,12 @@ const PostCreator = () => {
     },
   });
 
+  const [category, setCategory] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [title, setTitle] = useState('');
   const [teaserText, setTeaserText] = useState('');
-  const [category, setCategory] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async (e) => {
@@ -62,6 +65,41 @@ const PostCreator = () => {
 
       setIsLoading(false);
       navigate('/error');
+    }
+  };
+
+  // Handle image upload to the backend
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    setIsUploading(true);
+    setError(null);
+
+    // FormData to send the image as multipart/form-data
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      // Send the file to the backend using Axios
+      const response = await axios.post(
+        'http://localhost:5000/api/images/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      // Set the uploaded image URL received from the backend
+      setImageUrl(response.data.url);
+    } catch (err) {
+      setUploadError('Failed to upload image');
+      console.error(err);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -105,7 +143,6 @@ const PostCreator = () => {
         <div className={styles.quill}>
           <div ref={quillRef} />
         </div>
-        {/* Categories dropdown */}
         <div className={styles['input-container']}>
           <select
             className={styles.input}
@@ -123,6 +160,20 @@ const PostCreator = () => {
             <option value='Lifestyle'>Lifestyle</option>
             <option value='Other'>Other</option>
           </select>
+        </div>
+        <div className={styles.upload}>
+          <label htmlFor='image' className={styles['upload-label']}>
+            Upload Header Image{' '}
+            {isUploading && <FontAwesomeIcon icon={faSpinner} spin />}
+          </label>
+          <input
+            id='image'
+            type='file'
+            accept='image/*'
+            onChange={handleFileChange}
+          />
+          {uploadError && <p className={styles.error}>{uploadError}</p>}
+          {imageUrl && <img src={imageUrl} alt='Uploaded Image' />}
         </div>
         <button className={styles.button} type='submit'>
           Save

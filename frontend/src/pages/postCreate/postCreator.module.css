@@ -98,3 +98,42 @@
 .button:disabled {
   cursor: not-allowed;
 }
+
+.upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload input {
+  display: none;
+}
+
+.upload-label {
+  padding: 0 20px;
+  border-radius: 4px;
+  width: 300px;
+  height: 30px;
+  background-color: var(--gray);
+  font-family: 'syne-bold', sans-serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.upload-label:hover {
+  background-color: var(--brick);
+  color: var(--text-light);
+}
+
+.error {
+  color: var(--red);
+  font-size: 1rem;
+  margin-top: 5px;
+}
