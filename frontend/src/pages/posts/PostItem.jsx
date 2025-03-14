@@ -8,7 +8,7 @@ const PostItem = ({ post }) => {
     <div key={post._id} className={styles.post}>
       <div className={styles.image}>
         <Link to={`/posts/${post._id}`}>
-          <img src={post.image || placeholderImg} alt={post.title} />
+          <img src={post.headerImage || placeholderImg} alt={post.title} />
         </Link>
       </div>
       <div className={styles.content}>

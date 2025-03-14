@@ -49,6 +49,7 @@ const PostCreator = () => {
       await axios.post('http://localhost:5000/api/posts/draft', {
         title,
         teaserText,
+        headerImage: imageUrl,
         content,
         authorId: user._id,
         category,
