@@ -14,6 +14,10 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    headerImage: {
+      type: String,
+      required: false,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
