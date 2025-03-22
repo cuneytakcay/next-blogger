@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 import postsReducer from './postsSlice';
+import postDetailReducer from './postDetailSlice';
 import errorReducer from './errorSlice';
 
 const store = configureStore({
@@ -8,6 +9,7 @@ const store = configureStore({
     user: userReducer,
     posts: postsReducer,
     error: errorReducer,
+    postDetail: postDetailReducer,
   },
 });
 
